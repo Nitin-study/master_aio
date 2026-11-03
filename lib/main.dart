@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'questions.dart';
+import 'maths_gen.dart';
 
 final ValueNotifier<ThemeMode> themeNotifier = ValueNotifier(ThemeMode.light);
 
@@ -38,7 +39,7 @@ class Home extends StatelessWidget {
   ];
 
   void open(BuildContext context, String s) {
-    final chapters = bank[s];
+   final chapters = withGenerated(s);
     if (chapters == null || chapters.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('$s ke sawal jaldi aa rahe hain')),
