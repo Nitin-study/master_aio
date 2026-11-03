@@ -1,58 +1,13 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'questions.dart';
 
 final ValueNotifier<ThemeMode> themeNotifier = ValueNotifier(ThemeMode.light);
 
 void main() => runApp(const MasterAIO());
 
-class Question {
-  final String q;
-  final List<String> options;
-  final int answer;
-  const Question(this.q, this.options, this.answer);
-}
-
-const Map<String, List<Question>> bank = {
-  'Maths': [
-    Question('15% of 200 = ?', ['20', '30', '25', '35'], 1),
-    Question('Square root of 144 = ?', ['11', '12', '14', '13'], 1),
-    Question('Average of 10, 20, 30 = ?', ['15', '25', '20', '30'], 2),
-    Question('Speed 60 km/h, distance in 3 hours = ?',
-        ['120 km', '150 km', '180 km', '200 km'], 2),
-    Question('LCM of 4 and 6 = ?', ['12', '24', '10', '8'], 0),
-  ],
-  'Reasoning': [
-    Question('Next number: 2, 4, 8, 16, ?', ['24', '32', '30', '20'], 1),
-    Question('Odd one out',
-        ['Apple', 'Mango', 'Potato', 'Banana'], 2),
-  ],
-  'English': [
-    Question('Synonym of "Happy"', ['Sad', 'Joyful', 'Angry', 'Tired'], 1),
-    Question('Plural of "Child"', ['Childs', 'Childes', 'Children', 'Child'], 2),
-    Question('Antonym of "Brave"', ['Strong', 'Coward', 'Bold', 'Hero'], 1),
-  ],
-  'Hindi': [
-    Question('"सूर्य" का पर्यायवाची है', ['चंद्र', 'रवि', 'तारा', 'नभ'], 1),
-  ],
-  'General Science': [
-    Question('Chemical formula of water',
-        ['CO2', 'H2O', 'O2', 'NaCl'], 1),
-    Question('Plants absorb which gas for photosynthesis?',
-        ['Oxygen', 'Nitrogen', 'Carbon dioxide', 'Hydrogen'], 2),
-  ],
-  'Geography': [
-    Question('Longest river flowing in India',
-        ['Ganga', 'Yamuna', 'Godavari', 'Narmada'], 0),
-  ],
-  'J&K GK': [
-    Question('Dal Lake is in which city?',
-        ['Jammu', 'Srinagar', 'Leh', 'Anantnag'], 1),
-    Question('Which river flows through Srinagar?',
-        ['Chenab', 'Ravi', 'Jhelum', 'Beas'], 2),
-    Question('Wular Lake is the largest ___ lake of India',
-        ['Salt water', 'Freshwater', 'Artificial', 'Glacial'], 1),
-  ],
-};
+const Color okColor = Color(0x594CAF50);
+const Color badColor = Color(0x59F44336);
 
 class MasterAIO extends StatelessWidget {
   const MasterAIO({super.key});
@@ -83,8 +38,8 @@ class Home extends StatelessWidget {
   ];
 
   void open(BuildContext context, String s) {
-    final qs = bank[s];
-    if (qs == null || qs.isEmpty) {
+    final chapters = bank[s];
+    if (chapters == null || chapters.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('$s ke sawal jaldi aa rahe hain')),
       );
@@ -92,7 +47,8 @@ class Home extends StatelessWidget {
     }
     Navigator.push(
       context,
-      MaterialPageRoute(builder: (_) => QuizScreen(subject: s, questions: qs)),
+      MaterialPageRoute(
+          builder: (_) => ChapterScreen(subject: s, chapters: chapters)),
     );
   }
 
@@ -152,34 +108,85 @@ class Home extends StatelessWidget {
   }
 }
 
-const Color okColor = Color(0x594CAF50);
-const Color badColor = Color(0x59F44336);
+class ChapterScreen extends StatelessWidget {
+  final String subject;
+  final Map<String, List<Question>> chapters;
+  const ChapterScreen(
+      {super.key, required this.subject, required this.chapters});
+
+  void go(BuildContext context, String title, List<Question> qs) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (_) => QuizScreen(title: title, questions: qs)),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final names = chapters.keys.toList();
+    final all = chapters.values.expand((l) => l).toList();
+    return Scaffold(
+      appBar: AppBar(title: Text(subject)),
+      body: ListView(
+        padding: const EdgeInsets.all(12),
+        children: [
+          Card(
+            child: ListTile(
+              leading: const Icon(Icons.shuffle),
+              title: const Text('Saare chapters (mix)'),
+              subtitle: Text('${all.length} sawal'),
+              trailing: const Icon(Icons.chevron_right),
+              onTap: () => go(context, '$subject - Mix', all),
+            ),
+          ),
+          for (final n in names)
+            Card(
+              child: ListTile(
+                leading: const Icon(Icons.menu_book),
+                title: Text(n),
+                subtitle: Text('${chapters[n]!.length} sawal'),
+                trailing: const Icon(Icons.chevron_right),
+                onTap: () => go(context, n, chapters[n]!),
+              ),
+            ),
+        ],
+      ),
+    );
+  }
+}
 
 class QuizScreen extends StatefulWidget {
-  final String subject;
+  final String title;
   final List<Question> questions;
-  const QuizScreen({super.key, required this.subject, required this.questions});
+  const QuizScreen({super.key, required this.title, required this.questions});
   @override
   State<QuizScreen> createState() => _QuizScreenState();
 }
 
 class _QuizScreenState extends State<QuizScreen> {
+  late final List<Question> qs;
   int index = 0;
   int score = 0;
   int? selected;
   bool finished = false;
 
+  @override
+  void initState() {
+    super.initState();
+    qs = List<Question>.from(widget.questions)..shuffle();
+  }
+
   void pick(int i) {
     if (selected != null) return;
     setState(() {
       selected = i;
-      if (i == widget.questions[index].answer) score++;
+      if (i == qs[index].answer) score++;
     });
   }
 
   void next() {
     setState(() {
-      if (index + 1 >= widget.questions.length) {
+      if (index + 1 >= qs.length) {
         finished = true;
       } else {
         index++;
@@ -190,6 +197,7 @@ class _QuizScreenState extends State<QuizScreen> {
 
   void restart() {
     setState(() {
+      qs.shuffle();
       index = 0;
       score = 0;
       selected = null;
@@ -199,21 +207,20 @@ class _QuizScreenState extends State<QuizScreen> {
 
   Color? tint(int i) {
     if (selected == null) return null;
-    if (i == widget.questions[index].answer) return okColor;
+    if (i == qs[index].answer) return okColor;
     if (i == selected) return badColor;
     return null;
   }
 
   @override
   Widget build(BuildContext context) {
-    final total = widget.questions.length;
     return Scaffold(
-      appBar: AppBar(title: Text(widget.subject)),
-      body: finished ? result(total) : question(total),
+      appBar: AppBar(title: Text(widget.title)),
+      body: finished ? result() : question(),
     );
   }
 
-  Widget result(int total) {
+  Widget result() {
     return Center(
       child: Padding(
         padding: const EdgeInsets.all(24),
@@ -222,7 +229,7 @@ class _QuizScreenState extends State<QuizScreen> {
           children: [
             const Icon(Icons.emoji_events, size: 80, color: Colors.amber),
             const SizedBox(height: 16),
-            Text('Score: $score / $total',
+            Text('Score: $score / ${qs.length}',
                 style:
                     const TextStyle(fontSize: 28, fontWeight: FontWeight.bold)),
             const SizedBox(height: 24),
@@ -231,23 +238,23 @@ class _QuizScreenState extends State<QuizScreen> {
             const SizedBox(height: 8),
             OutlinedButton(
                 onPressed: () => Navigator.pop(context),
-                child: const Text('Home par jao')),
+                child: const Text('Wapas jao')),
           ],
         ),
       ),
     );
   }
 
-  Widget question(int total) {
-    final q = widget.questions[index];
+  Widget question() {
+    final q = qs[index];
     return SingleChildScrollView(
       padding: const EdgeInsets.all(16),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          LinearProgressIndicator(value: (index + 1) / total),
+          LinearProgressIndicator(value: (index + 1) / qs.length),
           const SizedBox(height: 12),
-          Text('Question ${index + 1} / $total'),
+          Text('Question ${index + 1} / ${qs.length}'),
           const SizedBox(height: 12),
           Text(q.q,
               style: const TextStyle(fontSize: 22, fontWeight: FontWeight.w600)),
@@ -263,7 +270,7 @@ class _QuizScreenState extends State<QuizScreen> {
               width: double.infinity,
               child: FilledButton(
                 onPressed: next,
-                child: Text(index + 1 == total ? 'Result dekho' : 'Next'),
+                child: Text(index + 1 == qs.length ? 'Result dekho' : 'Next'),
               ),
             ),
         ],
@@ -289,7 +296,9 @@ class _MockScreenState extends State<MockScreen> {
   @override
   void initState() {
     super.initState();
-    qs = bank.values.expand((l) => l).toList()..shuffle();
+    final all =
+        bank.values.expand((m) => m.values).expand((l) => l).toList()..shuffle();
+    qs = all.take(25).toList();
     secondsLeft = qs.length * 60;
     timer = Timer.periodic(const Duration(seconds: 1), (t) {
       if (secondsLeft <= 1) {
