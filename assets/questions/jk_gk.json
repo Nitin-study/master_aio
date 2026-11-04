@@ -21,6 +21,32 @@
       {"q": "Sonamarg is situated on which river?", "o": ["Sindh", "Jhelum", "Chenab", "Tawi"], "a": 0},
       {"q": "Mughal Road connects Shopian with", "o": ["Poonch", "Kathua", "Leh", "Udhampur"], "a": 0},
       {"q": "Nagin Lake is located in", "o": ["Jammu", "Srinagar", "Leh", "Anantnag"], "a": 1}
+    ],
+    "Lakes & Glaciers": [
+      {"q": "Dal Lake is located in which city?", "o": ["Jammu", "Srinagar", "Leh", "Anantnag"], "a": 1},
+      {"q": "Wular Lake is located in which district?", "o": ["Srinagar", "Bandipora", "Anantnag", "Pulwama"], "a": 1},
+      {"q": "Which lake is famous for its floating gardens in Srinagar?", "o": ["Dal Lake", "Manasbal", "Wular", "Nigeen only"], "a": 0},
+      {"q": "Manasbal Lake is in which district?", "o": ["Ganderbal", "Kupwara", "Kathua", "Doda"], "a": 0},
+      {"q": "Kolahoi glacier is in which region?", "o": ["Jammu", "Kashmir Valley", "Ladakh", "Poonch"], "a": 1}
+    ],
+    "Passes & Tunnels": [
+      {"q": "Banihal Pass connects Jammu region with", "o": ["Kashmir Valley", "Ladakh", "Punjab", "Himachal"], "a": 0},
+      {"q": "Zojila Pass connects Kashmir Valley with", "o": ["Ladakh", "Himachal", "Punjab", "Uttarakhand"], "a": 0},
+      {"q": "Jawahar Tunnel is located at", "o": ["Banihal", "Kupwara", "Rajouri", "Leh"], "a": 0},
+      {"q": "Pir Panjal range separates Kashmir Valley from", "o": ["Jammu plains", "Ladakh", "Punjab only", "Kargil"], "a": 0}
+    ],
+    "Culture & Places": [
+      {"q": "Hazratbal Shrine is in", "o": ["Jammu", "Srinagar", "Anantnag", "Baramulla"], "a": 1},
+      {"q": "Mata Vaishno Devi shrine base town", "o": ["Katra", "Udhampur", "Samba", "Kathua"], "a": 0},
+      {"q": "Shalimar Bagh (Srinagar) was built by", "o": ["Akbar", "Jahangir", "Shah Jahan", "Babur"], "a": 1},
+      {"q": "Saffron of Kashmir is mainly grown in", "o": ["Pampore", "Gulmarg", "Katra", "Poonch"], "a": 0},
+      {"q": "Amarnath cave shrine is in which district?", "o": ["Anantnag", "Ganderbal", "Both of these areas", "Kathua"], "a": 2, "e": "Yatra ke raaste Pahalgam (Anantnag) aur Baltal (Ganderbal) se jaate hain."}
+    ],
+    "History & Polity": [
+      {"q": "Article 370 was abrogated in which year?", "o": ["2014", "2017", "2019", "2021"], "a": 2},
+      {"q": "J&K Reorganisation Act 2019 created J&K UT and which other UT?", "o": ["Ladakh", "Chandigarh", "Puducherry", "Delhi"], "a": 0},
+      {"q": "Summer capital of J&K UT is", "o": ["Jammu", "Srinagar", "Leh", "Kargil"], "a": 1},
+      {"q": "Winter capital of J&K UT is", "o": ["Jammu", "Srinagar", "Leh", "Udhampur"], "a": 0}
     ]
   }
 }
