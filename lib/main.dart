@@ -4,10 +4,15 @@ import 'package:flutter/material.dart';
 import 'questions.dart';
 import 'maths_gen.dart';
 import 'progress.dart';
+import 'loader.dart';
 
 final ValueNotifier<ThemeMode> themeNotifier = ValueNotifier(ThemeMode.light);
 
-void main() => runApp(const MasterAIO());
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await loadExtra();
+  runApp(const MasterAIO());
+}
 
 const Color okColor = Color(0x594CAF50);
 const Color badColor = Color(0x59F44336);
@@ -342,8 +347,7 @@ class _MockScreenState extends State<MockScreen> {
   @override
   void initState() {
     super.initState();
-    final all =
-        bank.values.expand((m) => m.values).expand((l) => l).toList()..shuffle();
+    final all = allQuestions()..shuffle();
     qs = all.take(25).map((q) => q.shuffled(Random())).toList();
     secondsLeft = qs.length * 60;
     timer = Timer.periodic(const Duration(seconds: 1), (t) {
