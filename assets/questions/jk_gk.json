@@ -1,0 +1,25 @@
+{
+  "subject": "J&K GK",
+  "chapters": {
+    "Rivers & Dams": [
+      {"q": "Jhelum river originates from which place?", "o": ["Verinag", "Sonamarg", "Pahalgam", "Gulmarg"], "a": 0},
+      {"q": "Tawi river flows through which city?", "o": ["Srinagar", "Jammu", "Anantnag", "Baramulla"], "a": 1},
+      {"q": "Baglihar hydroelectric project is on which river?", "o": ["Jhelum", "Ravi", "Chenab", "Indus"], "a": 2},
+      {"q": "Uri hydroelectric project is on which river?", "o": ["Jhelum", "Chenab", "Tawi", "Ravi"], "a": 0},
+      {"q": "Pahalgam is situated on the bank of which river?", "o": ["Jhelum", "Lidder", "Tawi", "Chenab"], "a": 1}
+    ],
+    "Administration": [
+      {"q": "J&K became a Union Territory on", "o": ["5 Aug 2019", "31 Oct 2019", "26 Jan 2020", "15 Aug 2019"], "a": 1},
+      {"q": "How many districts are there in J&K UT?", "o": ["14", "18", "20", "22"], "a": 2},
+      {"q": "How many Lok Sabha seats does J&K UT have?", "o": ["4", "5", "6", "7"], "a": 1},
+      {"q": "How many elected Assembly seats does J&K UT have?", "o": ["83", "87", "90", "114"], "a": 2},
+      {"q": "Dogri language was added to the Eighth Schedule in", "o": ["1992", "2003", "2010", "2019"], "a": 1}
+    ],
+    "Places & Roads": [
+      {"q": "Gulmarg is located in which district?", "o": ["Srinagar", "Budgam", "Baramulla", "Kupwara"], "a": 2},
+      {"q": "Sonamarg is situated on which river?", "o": ["Sindh", "Jhelum", "Chenab", "Tawi"], "a": 0},
+      {"q": "Mughal Road connects Shopian with", "o": ["Poonch", "Kathua", "Leh", "Udhampur"], "a": 0},
+      {"q": "Nagin Lake is located in", "o": ["Jammu", "Srinagar", "Leh", "Anantnag"], "a": 1}
+    ]
+  }
+}
