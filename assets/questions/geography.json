@@ -1,0 +1,44 @@
+{
+  "subject": "Geography",
+  "chapters": {
+    "India": [
+      {"q": "Longest river of India (flowing within India) is", "o": ["Ganga", "Yamuna", "Godavari", "Narmada"], "a": 0},
+      {"q": "Largest state of India by area is", "o": ["Madhya Pradesh", "Rajasthan", "Maharashtra", "Uttar Pradesh"], "a": 1},
+      {"q": "Smallest state of India by area is", "o": ["Sikkim", "Goa", "Tripura", "Manipur"], "a": 1},
+      {"q": "Most populous state of India is", "o": ["Maharashtra", "Bihar", "Uttar Pradesh", "West Bengal"], "a": 2},
+      {"q": "Tropic of Cancer passes through how many Indian states?", "o": ["6", "7", "8", "9"], "a": 2},
+      {"q": "Highest peak of India is", "o": ["Mount Everest", "Kanchenjunga", "Nanda Devi", "K2"], "a": 1, "e": "Kanchenjunga Bharat ki sabse unchi choti hai (8586 m)."},
+      {"q": "Southernmost point of India is", "o": ["Kanyakumari", "Indira Point", "Rameswaram", "Lakshadweep"], "a": 1},
+      {"q": "Longest coastline among Indian states belongs to", "o": ["Tamil Nadu", "Gujarat", "Maharashtra", "Andhra Pradesh"], "a": 1},
+      {"q": "Thar Desert is mainly in", "o": ["Gujarat", "Rajasthan", "Haryana", "Punjab"], "a": 1},
+      {"q": "Chilika Lake is located in", "o": ["Odisha", "Kerala", "Tamil Nadu", "Andhra Pradesh"], "a": 0},
+      {"q": "Brahmaputra river enters India in which state?", "o": ["Assam", "Arunachal Pradesh", "Sikkim", "Nagaland"], "a": 1},
+      {"q": "Black soil is best suited for which crop?", "o": ["Cotton", "Rice", "Tea", "Jute"], "a": 0},
+      {"q": "Which river is called 'Sorrow of Bihar'?", "o": ["Ganga", "Kosi", "Son", "Gandak"], "a": 1},
+      {"q": "Western Ghats are also known as", "o": ["Sahyadri", "Nilgiri", "Aravalli", "Vindhya"], "a": 0}
+    ],
+    "World": [
+      {"q": "Largest continent is", "o": ["Africa", "Asia", "Europe", "Antarctica"], "a": 1},
+      {"q": "Largest ocean is", "o": ["Atlantic", "Indian", "Pacific", "Arctic"], "a": 2},
+      {"q": "Smallest continent is", "o": ["Europe", "Australia", "Antarctica", "Africa"], "a": 1},
+      {"q": "Longest river in the world is generally considered", "o": ["Amazon", "Nile", "Yangtze", "Mississippi"], "a": 1},
+      {"q": "Highest mountain peak in the world is", "o": ["K2", "Kanchenjunga", "Mount Everest", "Makalu"], "a": 2},
+      {"q": "Largest desert (hot) in the world is", "o": ["Gobi", "Sahara", "Thar", "Kalahari"], "a": 1},
+      {"q": "Deepest point of the oceans is in", "o": ["Mariana Trench", "Java Trench", "Puerto Rico Trench", "Tonga Trench"], "a": 0},
+      {"q": "Capital of Australia is", "o": ["Sydney", "Melbourne", "Canberra", "Perth"], "a": 2},
+      {"q": "Capital of Japan is", "o": ["Osaka", "Tokyo", "Kyoto", "Seoul"], "a": 1},
+      {"q": "Equator passes through which continent among these?", "o": ["Africa", "Europe", "Australia", "Antarctica"], "a": 0},
+      {"q": "Largest country in the world by area is", "o": ["China", "Canada", "Russia", "USA"], "a": 2},
+      {"q": "Which planet is known as the Red Planet?", "o": ["Venus", "Mars", "Jupiter", "Mercury"], "a": 1}
+    ],
+    "J&K Geography": [
+      {"q": "Highest peak in the Kashmir Himalaya (Union Territory of J&K) region is often cited as", "o": ["Kolahoi", "Nanga Parbat", "Haramukh", "Tatakuti"], "a": 0},
+      {"q": "Which river flows through Srinagar?", "o": ["Chenab", "Ravi", "Jhelum", "Beas"], "a": 2},
+      {"q": "Chenab river flows through which region?", "o": ["Jammu region", "Ladakh only", "Kashmir only", "Punjab only"], "a": 0},
+      {"q": "Pir Panjal range lies in which mountain system?", "o": ["Himalaya", "Aravalli", "Vindhya", "Western Ghats"], "a": 0},
+      {"q": "Dal Lake is in", "o": ["Srinagar", "Jammu", "Leh", "Kathua"], "a": 0},
+      {"q": "Zojila Pass lies between Kashmir Valley and", "o": ["Ladakh", "Himachal", "Punjab", "Nepal"], "a": 0},
+      {"q": "Jhelum river originates from", "o": ["Verinag", "Amarnath", "Sonamarg", "Zojila"], "a": 0}
+    ]
+  }
+}
