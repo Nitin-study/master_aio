@@ -1,0 +1,51 @@
+{
+  "subject": "General Science",
+  "chapters": {
+    "Physics": [
+      {"q": "SI unit of force is", "o": ["Joule", "Newton", "Watt", "Pascal"], "a": 1},
+      {"q": "SI unit of energy is", "o": ["Newton", "Watt", "Joule", "Pascal"], "a": 2},
+      {"q": "SI unit of power is", "o": ["Watt", "Joule", "Newton", "Ohm"], "a": 0},
+      {"q": "SI unit of pressure is", "o": ["Newton", "Pascal", "Joule", "Hertz"], "a": 1},
+      {"q": "SI unit of electric current is", "o": ["Volt", "Ohm", "Ampere", "Watt"], "a": 2},
+      {"q": "SI unit of resistance is", "o": ["Ohm", "Volt", "Ampere", "Farad"], "a": 0},
+      {"q": "SI unit of frequency is", "o": ["Hertz", "Decibel", "Tesla", "Weber"], "a": 0},
+      {"q": "Speed of light in vacuum is about", "o": ["3 x 10^6 m/s", "3 x 10^8 m/s", "3 x 10^5 m/s", "3 x 10^10 m/s"], "a": 1},
+      {"q": "Which mirror is used as a vehicle rear-view mirror?", "o": ["Concave", "Convex", "Plane", "Cylindrical"], "a": 1, "e": "Convex mirror ka drishya kshetra bada hota hai."},
+      {"q": "Which lens is used to correct short-sightedness (myopia)?", "o": ["Convex", "Concave", "Bifocal", "Cylindrical"], "a": 1},
+      {"q": "Unit of sound intensity level is", "o": ["Hertz", "Decibel", "Watt", "Tesla"], "a": 1},
+      {"q": "Acceleration due to gravity on Earth is about", "o": ["9.8 m/s²", "6.7 m/s²", "10.8 m/s²", "1.6 m/s²"], "a": 0},
+      {"q": "Which colour of light bends the least in a prism?", "o": ["Violet", "Blue", "Green", "Red"], "a": 3}
+    ],
+    "Chemistry": [
+      {"q": "Chemical formula of water is", "o": ["CO2", "H2O", "O2", "NaCl"], "a": 1},
+      {"q": "Chemical formula of common salt is", "o": ["NaCl", "KCl", "CaCO3", "NaOH"], "a": 0},
+      {"q": "Atomic number of Carbon is", "o": ["6", "12", "8", "14"], "a": 0},
+      {"q": "Atomic number of Hydrogen is", "o": ["1", "2", "3", "4"], "a": 0},
+      {"q": "pH of pure water is", "o": ["0", "7", "14", "1"], "a": 1},
+      {"q": "Acids have pH", "o": ["Less than 7", "Equal to 7", "More than 7", "Always 14"], "a": 0},
+      {"q": "Gas used to fill balloons because it is lighter than air", "o": ["Oxygen", "Helium", "Nitrogen", "Carbon dioxide"], "a": 1},
+      {"q": "Which gas is most abundant in Earth's atmosphere?", "o": ["Oxygen", "Nitrogen", "Carbon dioxide", "Argon"], "a": 1},
+      {"q": "Chemical formula of baking soda is", "o": ["NaHCO3", "Na2CO3", "NaOH", "CaCO3"], "a": 0},
+      {"q": "Rusting of iron needs", "o": ["Air only", "Water only", "Both air and water", "Neither"], "a": 2},
+      {"q": "Which metal is liquid at room temperature?", "o": ["Mercury", "Iron", "Sodium", "Copper"], "a": 0},
+      {"q": "Dry ice is solid form of", "o": ["Water", "Carbon dioxide", "Nitrogen", "Oxygen"], "a": 1},
+      {"q": "Symbol of Gold is", "o": ["Go", "Gd", "Au", "Ag"], "a": 2}
+    ],
+    "Biology": [
+      {"q": "Plants absorb which gas during photosynthesis?", "o": ["Oxygen", "Nitrogen", "Carbon dioxide", "Hydrogen"], "a": 2},
+      {"q": "Powerhouse of the cell is", "o": ["Nucleus", "Mitochondria", "Ribosome", "Golgi body"], "a": 1},
+      {"q": "Vitamin obtained from sunlight is", "o": ["A", "B", "C", "D"], "a": 3},
+      {"q": "Number of chambers in human heart", "o": ["2", "3", "4", "5"], "a": 2},
+      {"q": "Deficiency of Vitamin C causes", "o": ["Scurvy", "Rickets", "Night blindness", "Beriberi"], "a": 0},
+      {"q": "Deficiency of Vitamin D causes", "o": ["Scurvy", "Rickets", "Night blindness", "Anaemia"], "a": 1},
+      {"q": "Deficiency of Vitamin A causes", "o": ["Scurvy", "Rickets", "Night blindness", "Beriberi"], "a": 2},
+      {"q": "Blood group known as universal donor", "o": ["A", "B", "AB", "O negative"], "a": 3},
+      {"q": "Green pigment in plants is", "o": ["Chlorophyll", "Haemoglobin", "Melanin", "Carotene"], "a": 0},
+      {"q": "Red blood cells carry oxygen with the help of", "o": ["Chlorophyll", "Haemoglobin", "Insulin", "Keratin"], "a": 1},
+      {"q": "Largest organ of the human body is", "o": ["Liver", "Skin", "Lungs", "Heart"], "a": 1},
+      {"q": "Normal adult human body has how many bones?", "o": ["186", "206", "226", "256"], "a": 1},
+      {"q": "Insulin is produced by the", "o": ["Liver", "Pancreas", "Kidney", "Stomach"], "a": 1},
+      {"q": "Malaria is spread by", "o": ["Housefly", "Female Anopheles mosquito", "Aedes mosquito", "Tsetse fly"], "a": 1}
+    ]
+  }
+}
