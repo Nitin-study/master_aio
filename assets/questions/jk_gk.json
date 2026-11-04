@@ -1,8 +1,9 @@
 {
   "subject": "J&K GK",
+  "year": 2026,
   "chapters": {
     "Rivers & Dams": [
-      {"q": "Jhelum river originates from which place?", "o": ["Verinag", "Sonamarg", "Pahalgam", "Gulmarg"], "a": 0},
+      {"q": "Jhelum river originates from which place?", "o": ["Verinag", "Sonamarg", "Pahalgam", "Gulmarg"], "a": 0, "e": "Jhelum ka udgam Verinag (Anantnag) ke jharne se hai."},
       {"q": "Tawi river flows through which city?", "o": ["Srinagar", "Jammu", "Anantnag", "Baramulla"], "a": 1},
       {"q": "Baglihar hydroelectric project is on which river?", "o": ["Jhelum", "Ravi", "Chenab", "Indus"], "a": 2},
       {"q": "Uri hydroelectric project is on which river?", "o": ["Jhelum", "Chenab", "Tawi", "Ravi"], "a": 0},
