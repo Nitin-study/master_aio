@@ -1,5 +1,6 @@
 import 'dart:math';
 import 'questions.dart';
+import 'loader.dart';
 
 final Random _r = Random();
 
@@ -126,7 +127,7 @@ List<Question> _gen(Question Function() f, int n) =>
     List.generate(n, (_) => f());
 
 Map<String, List<Question>>? withGenerated(String subject) {
-  final base = bank[subject];
+  final base = mergedChapters(subject);
   if (subject == 'Maths') {
     return {
       ...?base,
