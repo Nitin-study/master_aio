@@ -6,12 +6,16 @@ import 'maths_gen.dart';
 import 'progress.dart';
 import 'loader.dart';
 import 'notes.dart';
+import 'config.dart';
+import 'pro.dart';
 
 final ValueNotifier<ThemeMode> themeNotifier = ValueNotifier(ThemeMode.light);
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await loadExtra();
+  await Pro.load();
+  await AppConfig.load();
   runApp(const MasterAIO());
 }
 
@@ -64,7 +68,32 @@ class MasterAIO extends StatelessWidget {
             brightness: Brightness.dark,
             useMaterial3: true),
         themeMode: mode,
-        home: const Home(),
+        home: AppConfig.mustUpdate ? const UpdateScreen() : const Home(),
+      ),
+    );
+  }
+}
+
+class UpdateScreen extends StatelessWidget {
+  const UpdateScreen({super.key});
+  @override
+  Widget build(BuildContext context) {
+    return const Scaffold(
+      body: Center(
+        child: Padding(
+          padding: EdgeInsets.all(24),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Icon(Icons.system_update, size: 80),
+              SizedBox(height: 16),
+              Text('Naya version aa gaya hai',
+                  style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold)),
+              SizedBox(height: 8),
+              Text('Kripya ऐप update karein.', textAlign: TextAlign.center),
+            ],
+          ),
+        ),
       ),
     );
   }
@@ -89,6 +118,10 @@ class _HomeState extends State<Home> {
   }
 
   void open(String s) {
+    if (Pro.locked(s)) {
+      go(const ProScreen());
+      return;
+    }
     final chapters = withGenerated(s);
     if (chapters == null || chapters.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
@@ -153,6 +186,10 @@ class _HomeState extends State<Home> {
         title: Text('Master AIO  •  ${DateTime.now().year}'),
         actions: [
           IconButton(
+              icon: Icon(Icons.workspace_premium,
+                  color: Pro.active ? Colors.amber : null),
+              onPressed: () => go(const ProScreen())),
+          IconButton(
               icon: const Icon(Icons.search),
               onPressed: () => go(const SearchScreen())),
           IconButton(
@@ -170,6 +207,15 @@ class _HomeState extends State<Home> {
       ),
       body: Column(
         children: [
+          if (AppConfig.message.isNotEmpty)
+            Card(
+              margin: const EdgeInsets.fromLTRB(12, 12, 12, 0),
+              color: Theme.of(context).colorScheme.primaryContainer,
+              child: ListTile(
+                leading: const Icon(Icons.campaign),
+                title: Text(AppConfig.message),
+              ),
+            ),
           stats(),
           Expanded(
             child: GridView.count(
@@ -183,7 +229,8 @@ class _HomeState extends State<Home> {
                     child: InkWell(
                       onTap: () => open(s),
                       child: Center(
-                        child: Text(s,
+                        child: Text(
+                            Pro.locked(s) ? '🔒 $s' : s,
                             textAlign: TextAlign.center,
                             style: const TextStyle(
                                 fontSize: 18, fontWeight: FontWeight.w600)),
@@ -231,7 +278,13 @@ class ChapterScreen extends StatelessWidget {
 
   int _year(String n) => chapterYear['$subject|$n'] ?? 0;
 
-  void go(BuildContext context, String title, List<Question> qs) {
+  void go(BuildContext context, String title, List<Question> qs,
+      [String? chapter]) {
+    if (chapter != null && Pro.locked(subject, chapter)) {
+      Navigator.push(
+          context, MaterialPageRoute(builder: (_) => const ProScreen()));
+      return;
+    }
     Navigator.push(
       context,
       MaterialPageRoute(
@@ -242,11 +295,12 @@ class ChapterScreen extends StatelessWidget {
 
   Widget tile(BuildContext context, String n) => Card(
         child: ListTile(
-          leading: const Icon(Icons.menu_book),
+          leading: Icon(
+              Pro.locked(subject, n) ? Icons.lock : Icons.menu_book),
           title: Text(n),
           subtitle: Text('${chapters[n]!.length} sawal'),
           trailing: const Icon(Icons.chevron_right),
-          onTap: () => go(context, n, chapters[n]!),
+          onTap: () => go(context, n, chapters[n]!, n),
         ),
       );
 
@@ -264,7 +318,10 @@ class ChapterScreen extends StatelessWidget {
     final evergreen = names.where((n) => _year(n) == 0).toList();
     final oldN = names.where((n) => _year(n) != 0 && _year(n) < cur).toList();
     final hasYears = names.any((n) => _year(n) != 0);
-    final usable = [...nowN, ...evergreen, ...oldN];
+    final usable = [
+      for (final n in [...nowN, ...evergreen, ...oldN])
+        if (!Pro.locked(subject, n)) n
+    ];
     final all = [for (final n in usable) ...chapters[n]!];
     final hasNotes = studyNotes.containsKey(subject);
     return Scaffold(
@@ -321,7 +378,10 @@ class ChapterScreen extends StatelessWidget {
                   MaterialPageRoute(
                     builder: (_) => RevisionScreen(
                         subject: subject,
-                        data: {for (final n in oldN) n: chapters[n]!}),
+                        data: {
+                          for (final n in oldN)
+                            if (!Pro.locked(subject, n)) n: chapters[n]!
+                        }),
                   ),
                 ),
               ),
@@ -577,8 +637,10 @@ class _MockSetupState extends State<MockSetup> {
     final subs = subject == null ? Home.subjects : [subject!];
     final lists = <List<SQ>>[];
     for (final s in subs) {
+      if (Pro.locked(s)) continue;
       final items = <SQ>[];
-      withGenerated(s)?.values.forEach((l) {
+      withGenerated(s)?.forEach((chapter, l) {
+        if (Pro.locked(s, chapter)) return;
         for (final q in l) {
           items.add(SQ(s, q));
         }
@@ -590,7 +652,7 @@ class _MockSetupState extends State<MockSetup> {
     }
     if (lists.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Is subject ke sawal jaldi aa rahe hain')),
+        const SnackBar(content: Text('Is subject ke sawal abhi uplabdh nahi')),
       );
       return;
     }
