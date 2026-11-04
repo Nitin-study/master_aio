@@ -1,10 +1,16 @@
+import 'dart:math';
+
 class Question {
   final String q;
   final List<String> options;
   final int answer;
   const Question(this.q, this.options, this.answer);
-}
 
+  Question shuffled(Random r) {
+    final idx = List<int>.generate(options.length, (i) => i)..shuffle(r);
+    return Question(q, [for (final i in idx) options[i]], idx.indexOf(answer));
+  }
+}
 const Map<String, Map<String, List<Question>>> bank = {
   'Maths': {
     'Percentage': [
