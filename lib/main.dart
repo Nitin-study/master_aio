@@ -1,7 +1,9 @@
 import 'dart:async';
+import 'dart:math';
 import 'package:flutter/material.dart';
 import 'questions.dart';
 import 'maths_gen.dart';
+import 'progress.dart';
 
 final ValueNotifier<ThemeMode> themeNotifier = ValueNotifier(ThemeMode.light);
 
@@ -31,15 +33,19 @@ class MasterAIO extends StatelessWidget {
   }
 }
 
-class Home extends StatelessWidget {
+class Home extends StatefulWidget {
   const Home({super.key});
   static const subjects = [
     'Maths', 'Reasoning', 'English', 'Hindi', 'General Science',
     'Geography', 'History & Polity', 'J&K GK', 'Current Affairs', 'Computer'
   ];
+  @override
+  State<Home> createState() => _HomeState();
+}
 
-  void open(BuildContext context, String s) {
-   final chapters = withGenerated(s);
+class _HomeState extends State<Home> {
+  void open(String s) {
+    final chapters = withGenerated(s);
     if (chapters == null || chapters.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('$s ke sawal jaldi aa rahe hain')),
@@ -50,8 +56,41 @@ class Home extends StatelessWidget {
       context,
       MaterialPageRoute(
           builder: (_) => ChapterScreen(subject: s, chapters: chapters)),
+    ).then((_) => setState(() {}));
+  }
+
+  Widget stats() {
+    return FutureBuilder<List<int>>(
+      future: Progress.load(),
+      builder: (_, snap) {
+        final d = snap.data ?? [0, 0, 0];
+        final acc = d[1] == 0 ? 0 : (d[0] * 100 ~/ d[1]);
+        return Card(
+          margin: const EdgeInsets.fromLTRB(12, 12, 12, 0),
+          child: Padding(
+            padding: const EdgeInsets.all(12),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                _stat('${d[2]}', 'Tests'),
+                _stat('${d[1]}', 'Sawal hal kiye'),
+                _stat('$acc%', 'Sahi'),
+              ],
+            ),
+          ),
+        );
+      },
     );
   }
+
+  Widget _stat(String v, String l) => Column(
+        children: [
+          Text(v,
+              style:
+                  const TextStyle(fontSize: 22, fontWeight: FontWeight.bold)),
+          Text(l, style: const TextStyle(fontSize: 12)),
+        ],
+      );
 
   @override
   Widget build(BuildContext context) {
@@ -69,6 +108,7 @@ class Home extends StatelessWidget {
       ),
       body: Column(
         children: [
+          stats(),
           Expanded(
             child: GridView.count(
               crossAxisCount: 2,
@@ -76,10 +116,10 @@ class Home extends StatelessWidget {
               crossAxisSpacing: 12,
               mainAxisSpacing: 12,
               children: [
-                for (final s in subjects)
+                for (final s in Home.subjects)
                   Card(
                     child: InkWell(
-                      onTap: () => open(context, s),
+                      onTap: () => open(s),
                       child: Center(
                         child: Text(s,
                             textAlign: TextAlign.center,
@@ -99,7 +139,8 @@ class Home extends StatelessWidget {
                 icon: const Icon(Icons.timer),
                 label: const Text('Full Mock Test (Timer)'),
                 onPressed: () => Navigator.push(context,
-                    MaterialPageRoute(builder: (_) => const MockScreen())),
+                        MaterialPageRoute(builder: (_) => const MockScreen()))
+                    .then((_) => setState(() {})),
               ),
             ),
           ),
@@ -165,16 +206,19 @@ class QuizScreen extends StatefulWidget {
 }
 
 class _QuizScreenState extends State<QuizScreen> {
-  late final List<Question> qs;
+  late List<Question> qs;
   int index = 0;
   int score = 0;
   int? selected;
   bool finished = false;
 
+  List<Question> _fresh() =>
+      (widget.questions.map((q) => q.shuffled(Random())).toList()..shuffle());
+
   @override
   void initState() {
     super.initState();
-    qs = List<Question>.from(widget.questions)..shuffle();
+    qs = _fresh();
   }
 
   void pick(int i) {
@@ -189,6 +233,7 @@ class _QuizScreenState extends State<QuizScreen> {
     setState(() {
       if (index + 1 >= qs.length) {
         finished = true;
+        Progress.add(score, qs.length);
       } else {
         index++;
         selected = null;
@@ -198,7 +243,7 @@ class _QuizScreenState extends State<QuizScreen> {
 
   void restart() {
     setState(() {
-      qs.shuffle();
+      qs = _fresh();
       index = 0;
       score = 0;
       selected = null;
@@ -299,7 +344,7 @@ class _MockScreenState extends State<MockScreen> {
     super.initState();
     final all =
         bank.values.expand((m) => m.values).expand((l) => l).toList()..shuffle();
-    qs = all.take(25).toList();
+    qs = all.take(25).map((q) => q.shuffled(Random())).toList();
     secondsLeft = qs.length * 60;
     timer = Timer.periodic(const Duration(seconds: 1), (t) {
       if (secondsLeft <= 1) {
@@ -318,7 +363,13 @@ class _MockScreenState extends State<MockScreen> {
   }
 
   void submit() {
+    if (finished) return;
     timer?.cancel();
+    int c = 0;
+    answers.forEach((k, v) {
+      if (qs[k].answer == v) c++;
+    });
+    Progress.add(c, answers.length);
     setState(() => finished = true);
   }
 
